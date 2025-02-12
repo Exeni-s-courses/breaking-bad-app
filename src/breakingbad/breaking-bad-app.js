@@ -13,23 +13,25 @@ const fetchQuote = async () => {
  */
 export const BreakingBadApp = async (element) => {
     document.querySelector('#app-title').innerHTML = 'Breaking Bad App';
-    element.innerHTML = 'Loading...';
-    try {
-        const { quote } = await fetchQuote();
-        element.innerHTML = `${quote}`;
-    } catch (error) {
-        element.innerHTML = error;
-
-    }
 
     const quoteLabel = document.createElement('blockquote')
     const authorLabel = document.createElement('h3')
     const newxtQuoteButton = document.createElement('button');
     newxtQuoteButton.innerText = 'Next Quote';
 
-    const renderQuote = ({quote, author}) => {
+    const renderQuote = ({ quote, author }) => {
+        newxtQuoteButton.disabled = false;
         quoteLabel.innerHTML = quote;
         authorLabel.innerHTML = author;
-        element.replaceChildren( quoteLabel, authorLabel, newxtQuoteButton );
+        element.replaceChildren(quoteLabel, authorLabel, newxtQuoteButton);
     }
+
+    newxtQuoteButton.addEventListener('click', async () => {
+        element.innerHTML = 'Loading...';
+        newxtQuoteButton.disabled = true;
+        const res = await fetchQuote();
+        renderQuote(res);
+    })
+
+    fetchQuote().then(renderQuote);
 }
