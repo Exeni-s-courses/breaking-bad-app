@@ -21,4 +21,15 @@ export const BreakingBadApp = async (element) => {
         element.innerHTML = error;
 
     }
+
+    const quoteLabel = document.createElement('blockquote')
+    const authorLabel = document.createElement('h3')
+    const newxtQuoteButton = document.createElement('button');
+    newxtQuoteButton.innerText = 'Next Quote';
+
+    const renderQuote = ({quote, author}) => {
+        quoteLabel.innerHTML = quote;
+        authorLabel.innerHTML = author;
+        element.replaceChildren( quoteLabel, authorLabel, newxtQuoteButton );
+    }
 }
