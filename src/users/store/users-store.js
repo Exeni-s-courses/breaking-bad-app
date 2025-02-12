@@ -42,7 +42,12 @@ const onUserChanged = ( updatedUser ) => {
 }
 
 const reloadPage = async () => {
-
+    const res = await loadUsersByPage( state.currentPage );
+    if(res.data.length === 0 && state.currentPage === res.last) {
+        await loadPreviousPage();
+        return;
+    };
+    state.users = res.data;
 }
 
 
